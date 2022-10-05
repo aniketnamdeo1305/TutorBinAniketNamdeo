@@ -1,0 +1,27 @@
+{
+  "name": "tutorbin",
+  "version": "1.0.0",
+  "description": "Assignment",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aniketnamdeo1305/TutorBinAniketNamdeo.git"
+  },
+  "author": "Aniket Namdeo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aniketnamdeo1305/TutorBinAniketNamdeo/issues"
+  },
+  "homepage": "https://github.com/aniketnamdeo1305/TutorBinAniketNamdeo#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
