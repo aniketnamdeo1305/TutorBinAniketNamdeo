@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 var todoSchema = new mongoose.Schema({
     userId: {
-        type: String
+        type: String,
+        ref: 'User'
     },
     task: {
         type: String
@@ -11,9 +12,11 @@ var todoSchema = new mongoose.Schema({
         type: String
     },
     status: {
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 });
 
+const Todo = mongoose.model('Todo', todoSchema);
+module.exports = Todo;
 
-mongoose.model('Todo', todoSchema);

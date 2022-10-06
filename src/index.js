@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+require("dotenv").config();
 
 require('./models/index');
 const routes = require('./routes/index');
@@ -9,6 +10,6 @@ app.use(cors());
 app.use(express.json());
 app.use('/v1', routes);
 
-app.listen(2468, () => {
-    console.log('Server Started on 2468');
+app.listen(process.env.PORT, () => {
+    console.log(`Server Started on ${process.env.PORT}`);
 })
