@@ -10,6 +10,10 @@ const todoSchema = Joi.object().keys({
 });
 
 class TodoController {
+  /**
+   * Add Task for User
+   * @return {JSON | Error}
+   */
   addTask = catchAsync(async (req, res) => {
     const result = todoSchema.validate(req.body);
     if (result.error) {
@@ -29,12 +33,20 @@ class TodoController {
     });
   });
 
+  /**
+   * List Tasks of User
+   * @return {JSON | Error}
+   */
   listTasks = catchAsync(async (req, res) => {
     const sort = {};
+
+    //If sort is present
     if (req.query.sortBy && req.query.sortOrder) {
       Object.assign(sort, { [req.query.sortBy]: req.query.sortOrder });
     }
     let queryOptions = { userId: req.decoded.uid };
+
+    //If Search is present - On Task Name Only
     if (req.query.search) {
       const options = {
         $and: [
@@ -55,9 +67,13 @@ class TodoController {
     });
   });
 
+  /**
+   * Update Task for User
+   * @return {JSON | Error}
+   */
   updateTaskStatus = catchAsync(async (req, res) => {
-    const filter = {_id: req.query.task_id, userId: req.decoded.uid};
-    const update = {status: req.query.status};
+    const filter = { _id: req.query.task_id, userId: req.decoded.uid };
+    const update = { status: req.query.status };
     const task = await Todo.findOneAndUpdate(filter, update);
     return res.status(200).json({
       success: true,
@@ -66,8 +82,15 @@ class TodoController {
     });
   });
 
+  /**
+   * Delete Task for User
+   * @return {JSON | Error}
+   */
   deleteTask = catchAsync(async (req, res) => {
-    const task = await Todo.deleteOne({_id: req.query.task_id, userId: req.decoded.uid});
+    const task = await Todo.deleteOne({
+      _id: req.query.task_id,
+      userId: req.decoded.uid,
+    });
     return res.status(200).json({
       success: true,
       message: "Task Deleted Successfully",
@@ -75,11 +98,15 @@ class TodoController {
     });
   });
 
+  /**
+   * Edit Task for User
+   * @return {JSON | Error}
+   */
   editTask = catchAsync(async (req, res) => {
-    const filter = {_id: req.query.task_id, userId: req.decoded.uid};
+    const filter = { _id: req.query.task_id, userId: req.decoded.uid };
     const update = {
-        task: req.body.task,
-        description: req.body.description
+      task: req.body.task,
+      description: req.body.description,
     };
     const task = await Todo.findOneAndUpdate(filter, update);
     return res.status(200).json({
@@ -89,9 +116,15 @@ class TodoController {
     });
   });
 
+  /**
+   * Fetch Task for User
+   * @return {JSON | Error}
+   */
   getTask = catchAsync(async (req, res) => {
-    
-    const task = await Todo.findOne({_id: req.query.task_id, userId: req.decoded.uid});
+    const task = await Todo.findOne({
+      _id: req.query.task_id,
+      userId: req.decoded.uid,
+    });
     return res.status(200).json({
       success: true,
       message: "Task Fetched Successfully",

@@ -12,6 +12,10 @@ const userSchema = Joi.object().keys({
 });
 
 class AuthController {
+  /**
+   * Register User
+   * @return {JSON | Error}
+   */
   register = catchAsync(async (req, res) => {
     const result = userSchema.validate(req.body);
     if (result.error) {
@@ -58,6 +62,10 @@ class AuthController {
 
   });
 
+  /**
+   * Login User
+   * @return {JSON | Error}
+   */
   login = catchAsync(async (req, res) => {    
     const { email, password } = req.body;
 
